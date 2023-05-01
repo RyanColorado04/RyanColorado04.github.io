@@ -36,7 +36,15 @@
 								<header class="major">
 									<h1>Weekly Update</h1>
 								</header>
-								<p>ghjghkhj</p> 
+								<p>I am typing up my notes for the chapters I have read of the book I'm using for Scala. These will eventually all go on the GitHub pages site. I am terrible at we design and I don't have it set up correctly yet. Here is an example of a writeup from chapter 1. This will have more code in it eventually:</p>
+								<p>Functional programming (FP) is based on the simple premise of constructing programs by only using pure functions. A function is a pure function if it does not have a side effect. A function has a side effect if it does something other than returning a result. Functional programming is a restriction on how write programs, but it is not a restriction on what programs can express. FP increases modularity. This makes it easier to test, reuse, parallelize, generalize and to reuse code.</p>
+								<p>An example of a problem that FP can help solve is a method in a class to buy a cup of coffee. The method that many people would write might involve many side effects such as contacting the credit card company, authorizing a transaction, etc. Because this has many side effects, this is difficult to test. It is also difficult to reuse in situations such as the user buying multiple cups of coffee. An example of a negative side effect may be that the payment processor is contacted 12 times.</p>
+								<p>The solution with function programming is obviously to remove the side effects. For example, you can have the buy coffee method return the charge as a value in addition to returning the cup of coffee. This allows us to reuse the function more easily to purchase multiple cups of coffee with a single transaction.</p>
+								<p>I will now give a few examples of a pure function. A function with an input of type A and output type B (A=>B) is a computation that relates every value a of type A to exactly one value b of type B. Another example is inToString (Int=> String) or Integer.toString() in Java. Another example is the + symbol in math. For example, 2+3 is an expression that applies the pure function plus to the values 2 and 3. 2 and 3 are also expressions.</p>
+								<p>Two important concepts of functional programming are referential transparency and the substitution model. The substitution model is where all an evaluation does is reduce an expression to a value. It can be applied to all expressions if they have no side effects.</p>
+								<p>Referential transparency means that an expression in a program may be replaced by its value without changing the result of the program. Referential transparency forces the invariant that everything a function does is represented by the value it returns. This means that methods should always return the same value for a given argument, without having any other effect. Here is an example of a referentially transparent function in C++:
+								<p>int addOne(int x){return x+1;}</p>
+								<p>With a referential transparent function, you can replace the function and its input with a value instead of calling the function. So instead of calling addOne(5), which is an input of parameter 5, you could just replace it with 6.</p> 
 							</section>
 
 					</div>
