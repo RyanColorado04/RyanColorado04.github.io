@@ -36,9 +36,24 @@
 								<header class="major">
 									<h1>Weekly Update</h1>
 								</header>
-								<p>ghjghkhj</p> 
+								<p>I got two more practice problems done today. These forced me to use zip as well as option.</p>
+								<p>Option is<a href="https://en.wikipedia.org/wiki/Monad_(functional_programming)"> a Monad</a>. Monads cover a “computational aspect”. In this problem, it covered the possible absence of a value. From the question explanation: Proper use of Monads can result in very concise yet elegant and readable code.</p>
+								<p>Here was my solution:</p>
+								<div>
+								<pre>
+<code>
+object Hamming {
+	def distance(dnaStrandOne: String, dnaStrandTwo: String): Option[Int] = {
+		if (dnaStrandOne.length == dnaStrandTwo.length){
+			Option(dnaStrandOne zip dnaStrandTwo count (dnaStrand => dnaStrand._1 != dnaStrand._2))
+				} else { None }
+		}
+}
+</code>
+</pre>
+</div>
+								</p>There is probably a better way to do this, but I was trying to solve it in a "Scala" way. I had to watch some YouTube videos and read some blogs and Stack Overflow to get these problems today. I will continue working on these over the weekend as well as reading and watching lectures.</p>
 							</section>
-
 					</div>
 
 				<!-- Footer -->
