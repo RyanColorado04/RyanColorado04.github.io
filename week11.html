@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Weekly Update</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Ryan Young</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://github.com/RyanColorado04/RyanColorado04.github.io" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<h1>Weekly Update</h1>
+								</header>
+								<p>I had a midterm in my Computer Systems class this week so I didn't get much done during the week. I worked on online Scala questions and watched lectures and typed up my notes for the Scala book this weekend. I am continuing to study the rest of the day and will fill out more as the day goes by.</p>
+							<p>Chapter 3 Notes:</p>
+							<p>Functional programs don’t update variables or modify mutable data structures. This chapter shows what type of data structures you can use.</p>
+							<p>A functional data structure is operated on using only pure functions. Pure functions do not change data in place or perform other side effects. Thus, functional data structures are by definition immutable.</p>
+							<p>The structure that this chapter uses as an example is the linked list. I will post the full data structure later. The data structure is defined like this:</p>
+							<p>Sealed trait List [+A]</p>
+							<p>In general, a data type is introduced with the trait key word. A trait is an abstract interface that may optionally contain implementations of some methods. In this case, a trait List is declared with no methods. The sealed keyword in front means that all implementations of the trait must must be declared in this file. Note, abstract class could also have been used here instead of trait.</p>
+							<p>The + in front of the type parameter A is a variance annotation that signals that A is a covariant or positive parameter. This lets it work with subtypes in Scala.</p>
+							<p>This file also contains two implementations, or data structures, of List.
+							<br>Example: case object Nil extends List[Nothing]</p>
+							<p>Using the type parameter [+A] after sealed trait List makes this data type polymorphic. We can use this same definition for a list of integers, doubles, strings, etc.
+							<br>Example: val ex1: List Double = Nil
+							<br>Example 2: List[Int] = Cons(1, Nil)</p>
+							<p>The data structure also uses pattern matching:</p>
+							<div>
+							<pre>
+<code>
+def sums(ints: List[Int]): Int = ints match {
+	case Nil => 0
+	case Cons(x, xs) => x + sum(xs)
+}
+</code>
+							</pre>
+							</div>
+							
+							<p>Pattern matching in Scala is like a fancy switch statement that may descend into the structure of the expression it examines and extract subexpressions of that structure. If the target matches the pattern in a case, the result of that case becomes the result of the entire match expression.</p>
+
+							<p>The chapter then goes over adding or removing elements from a list if the data is immutable. This is surprisingly simple. For example, when you add an element 1 to the front of an existing list, a new list is returned. Since lists are immutable, it is just reused in a process called data sharing. This lets functions be implemented more efficiently. You never have to worry about subsequent code later modifying your data later. This is a benefit of functional programming. Writing purely functional data structures that support different operations efficiently is all about finding clever ways to exploit data sharing.</p>
+
+							<p>This chapter also goes over foldRight briefly. I will add notes on this in a later section.</p>
+
+							<p>This chapter also briefly goes over using underscore notation for anonymous functions. Example:</p> 
+
+							<div>
+							<pre>
+<code>
+(x, y) => x + y
+</code>
+							</pre>
+							</div>
+
+							<p>This can be rewritten as:</p> 
+							<div>
+							<pre>
+<code>
+(x, y) => _ + _
+</code>
+							</pre>
+							</div>
+							
+							<p>Underscore notation can be used in situations where they type of x and y can be inferred by Scala. This is useful in examples like foldRight and pattern matching.</p>
+
+							<p>The chapter also mentions that List exists in the standard Scala library. The rest of the book, the authors use the Scala standard version.</p>
+
+							<p>Also, here is an example of pattern matching and using underscores from one of the problems from exercism.org:</p>
+
+							<div>
+							<pre>
+<code>
+isQuestion, isYell) match {
+	// He answers 'Calm down, I know what I'm doing!' if you yell a question at him.
+	case (true, true) => "Calm down, I know what I'm doing!"
+	// He answers 'Whoa, chill out!' if you YELL AT HIM (in all capitals).
+	case (_, true)    => "Whoa, chill out!"
+	// Bob answers 'Sure.' if you ask him a question, such as "How are you?".
+	case (true, _)    => "Sure."
+	// He answers 'Whatever.' to anything else.
+	case _            => "Whatever."
+}
+</code>
+							</pre>
+							</div>
+							<p>This chapter was helpful in being able to solve this in Scala.</p>
+							</section>
+
+					</div>
+
+				<!-- Footer -->
+				<footer id="footer">
+					<section class="split contact">
+						<section class="alt">
+							<h3>Address</h3>
+							<p>University of Colorado Boulder, 552 UCB<br />
+							Boulder, CO 80309-0552</p>
+						</section>
+						<section>
+							<h3>Email</h3>
+							<p><a href="#">ryyo1332@colorado.edu</a></p>
+						</section>
+						<section>
+							<h3>Social</h3>
+							<ul class="icons alt">
+								<li><a href="https://github.com/RyanColorado04/RyanColorado04.github.io" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+							</ul>
+						</section>
+					</section>
+				</footer>
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

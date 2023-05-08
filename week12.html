@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Weekly Update</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Ryan Young</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="https://github.com/RyanColorado04/RyanColorado04.github.io" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<h1>Weekly Update</h1>
+								</header>
+								<p>Chapter 4 Notes</p>
+								<p>This chapter is about handling errors without exceptions. In chapter 1, it was noted that throwing an exception is a side effect. There are, however, ways to handle raising and handling errors functionally. The functional solution is to return errors as values. This is safer and it retains referential transparency (RT). In this chapter, the author creates two data types, Option and Either, but these are actually part of the Scala standard library and don’t need to be user implemented.</p>
+								<p>Exceptions break referential transparency. Referential transparency means that any expression may be substituted with the value it refers to. For example, x + y is referentially transparent. But if y throws an exception, such as throw new exception(“fail!”), it now isn’t.</p>
+
+								<p>RT means they do not depend on context, and non-RT are context-dependent. Exceptions should only be used for error handling and not control flow. FP needs an alternative to exceptions without losing the primary benefit of consolidating and centralizing error-handling logic.</p>
+
+								<p>In FP, the technique is to instead of throwing an exception, return a value that indicates that an exception occurred. FP uses a new generic type for these possibly defined values and uses higher order-functions to encapsulate common patterns of handling and propagating errors. In FP, unlike in C, these are completely type-safe.</p>
+
+								<p>This chapter goes over a few ways to use alternatives to exceptions, but both have issues. Since they are not used in FP and are not recommended, I will not go over them in the notes. I will just note that they are “returning a bogus value” and “forcing the caller to supply an argument that tells us what to do in case we don’t know how to handle the input”. These are written about on page 50-52.</p>
+
+								<p>The solution is to represent explicitly in the return type that a function may not always have an answer. This is deferring to the caller for the error-handling strategy. Scala uses a type Option to handle this.</p>
+
+								<p>This is the example that the book uses:</p>
+
+								<div>
+								<pre>
+<code>
+def mean(xs: Seq[Double]): Double =
+	if (xs.isEmpty)
+		throw new ArithmeticExcetion(“mean of empty list!”)
+	else xs.sum / xs.length
+</code>
+								<pre>
+								</div>
+
+								<p>This function is a partial function that computes the mean of a list. A partial function is not defined for some inputs. Now we update this to use Option. Option has two cases where it can be defined: Some or None.</p>
+
+								<div>
+								<pre>
+<code>
+def mean(xs: Seq[Double]) : Option[Double] =
+	if (xs.isEmpty) None
+	else xs.sum / xs.length
+</code>
+								<pre>
+								</div>
+
+								<p>The return type now reflects the possibility that the result may not always be defined. Because the result is always the declared type Option[Double] being returned, it is now a total function. It takes each value of the input type to exactly one value of the output type.</p>
+								<p>Partial functions are common in programming, and Option and Either are how this partiality is dealt with in FP. Option is essentially a List object that contain at most one element. Pattern matching in Scala is useful with the Option type and the book gives some examples.</p>
+
+								<p>While pattern matching can be used with Option, Scala programmers almost always use higher-order functions. One example that the book uses is the map function.</p>
+
+								<p>Example from inside an Employee class:</p>
+
+								case class Employe(name: String, department: String)
+
+								<div>
+								<pre>
+<code>
+def lookupByName(name: String) : Option[Employee] = …
+	val joeDepartment: Option[String] =
+	lookupByname(“Joe”).map(_.department)
+</code>
+								<pre>
+								</div>
+
+								<p>Here, lookupByName(“Joe”) returns Option[Employee]. This is transformed using map to pull out the Option[String] representing the department.</p>
+
+								<p>This code does not explicitly check the result of lookupByName(“Joe”). Instead it continues like no error occurred. If it had returned “None”, the rest of the computation and map would have been aborted. Map would not have called the _.department function.</p>
+
+								<p>The chapter also goes over the “Either” data type. Option is very simplistic. It doesn’t tell you anything about what went wrong in the case of an exceptional condition. It only gives “None”. If you want more information such as a String that tells you what went wrong, then you need to use Either. It is a data typethat encodes whatever information we want about the failures. Ether is an extension of Option.</p>
+
+								<p>With Either, it can return two things. This means that it is a disjoint union of two types. When there is a success, it uses Right, and Left is used for failure.</p>
+
+								<p>Here is an example from the book:</p>
+
+								<div>
+								<pre>
+								<code>
+								def mean (xs: IndexedSeq[Double]) : Either[String, Double] =
+								if (xs.isEmpty)
+									Left(“mean of empty list”!)
+								else
+									Right(xs.sum / xs.lenth)
+								</code>
+								<pre>
+								</div>
+
+								<p>You can also include more information about the error such as a stack trace that shows the location of the error in the source code:</p>
+
+								<p>Example:</p>
+
+								<div>
+								<pre>
+<code>
+def safeDiv (x: Int, y: Int) : Either[Exception, Int] =
+	try Righ(x,y)
+	catch { case e: Exception => Left(e) }
+</code>
+								</pre>
+								</div>
+							</section>
+
+					</div>
+
+				<!-- Footer -->
+				<footer id="footer">
+					<section class="split contact">
+						<section class="alt">
+							<h3>Address</h3>
+							<p>University of Colorado Boulder, 552 UCB<br />
+							Boulder, CO 80309-0552</p>
+						</section>
+						<section>
+							<h3>Email</h3>
+							<p><a href="#">ryyo1332@colorado.edu</a></p>
+						</section>
+						<section>
+							<h3>Social</h3>
+							<ul class="icons alt">
+								<li><a href="https://github.com/RyanColorado04/RyanColorado04.github.io" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+							</ul>
+						</section>
+					</section>
+				</footer>
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

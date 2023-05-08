@@ -36,9 +36,93 @@
 								<header class="major">
 									<h1>Weekly Update</h1>
 								</header>
-								<p>Week 7 notes here</p> 
-							</section>
+								<p>Chapter 2 Notes typed up:</p>
 
+								<p>Most people think about programs as a sequence of instructions executed in order. This chapter shows the basics of how to NOT do that. It also introduces how to write programs in the Scala programming language. This chapter also introduces tail recursion and high order functions (HOF).</p>
+								
+								<p>In Scala, the object keyword creates a new singleton type, which is like a class that only has a single named instance. It is like in Java when you create a new instance of an anonymous class. Scala code must be in an object or class. Objects also have methods which can be private like in Java.</p>
+								
+								<p>This is an example of a pure function in Scala from the chapter:</p>
+								<div>
+								<pre>
+<code>
+def abs(n: Int): Int = n
+	if (n < 0) -n
+	else n
+</code>
+								</pre>
+								</div>
+								
+								<p>This function is a pure function that returns the absolute value of n. The def keyword is followed by the name of the method which is followed by the parameter list in the parentheses. There is no explicit return keyword. Scala is usually able to infer the return types of methods so they can be omitted, but it is considered good style to declare them.</p>								
+								<p>If the body of a method contains more than one statement, we put them inside curly braces called a block. Statements are separated by newlines or by semicolons.</p>
+								<p>In Scala, the main method is an outer shell that calls into our purely functional core. Methods like main can sometimes be called procedures rather than functions because they have side effects. The name main is special, and when you run a program, Scala will look for a method named main with a specific signature. It must take an array of Strings as its argument and the return type must be Unit. Unit is the same as void in C and Java.</p>
+								<p>Here is an example of a main function:</p>
+								<div>
+								<pre>
+<code>
+def main(args: Array[String]): Unit =
+	println(formatAbs(-42))
+</code>
+								</pre>
+								</div>
+								
+								<p>Scala is usually built and run in an IDE like IntelliJ (what I am using) or Eclipse, but it can also be run from the command line.</p>
+								
+								<p>Aside from some rare technicalities, every value in Scala is an object that may have zero or more members. In Scala, an object whose primary purpose is giving its members a namespace is called a module. Members of objects are accessed using typical object-oriented dot notation.</p>
+								
+								<p>In Scala, functions are values. Like other values of other types (integers, strings, lists, etc.), functions can be assigned to variables, stored in data structures, and passed as arguments to functions. In Scala, functions often accept other functions as arguments. This is useful when writing purely functional programs, and it is called a higher-order function (HOF). HOFs are functions that take other functions as arguments and may themselves return functions as their output.</p>
+								
+								<p>In Scala, loops can be written functionally by using a recursive function. Scala has inner functions (also called local definitions). In Scala, it is common to write functions that are local to the body of anther function.</p>
+								
+								<p>Here is an example from the book:</p>
+								
+								<div>
+								<pre>
+<code>
+def factorial(n: Int): {
+	def go(n: Int, acc: Int): Int =
+		if (n<=0) acc
+		else go(n-1, n*acc)
+</code>
+								</pre>
+								</div>
+								
+								<p>The function go is a helper method defined insider another function. The arguments to go are the state of the loop. The method go is called recursively to advance to the new loop state. The loop is finally exited when a value without a recursive call is returned.</p>
+								
+								<p>The Scala compiler detects this self-recursion the same way as it would a while loop if the recursive call is in the tail position. A call is in tail position if the caller does nothing other than return the value of the recursive call. This is how tail recursion is done. In tail recursion, there is no other operation to perform after executing the recursive function itself. The function can directly return the result of the recursive call. Basically, tail recursion is when the recursive function is called last. It is also much more efficient than non-tail recursion and is a way to optimize code.</p>
+								
+								
+								<p>Chapter Exercise 2.1 solution:
+								<br>Write a tail recursion function to get the Fibonacci number:
+								<br>Here is my solution:</p>
+								
+								<div>
+								<pre>
+<code>
+@annotation.tailrec
+def fib(n: Int, a: Int = 0, b: Int = 1): Int = {
+	if (n == 0) return a
+	if (n == 1) return b
+	fib(n - 1, b, a + b)
+}
+</code>
+								</pre>
+								</div>
+								
+								<p>Note: the command @annotation.tailrec is telling the Scala compiler to expect a tail recursion function.</p>
+								
+								<p>The previous functions I've listed were monomorphic functions, which are functions that can only operate on one type of data. For example, the factorial function above only uses an integer value type.</p>
+								
+								<p>In Scala, when writing HOFs, it is preferable to write code that works for any type, which is called polymorphic functions. Polymorphic functions are also sometimes called generic functions. They are abstracted over type. Polymorphic functions use a comma separated list of type parameters surrounded by square brackets (example below will use a single [A]) following the name of the function, but we can call the type parameters anything we want. The type parameter list introduces type variables that can be referenced in the rest of the type's signature.</p>
+								
+								<p>Example of polymorphic function:
+								<br>
+								findFirst[A](as: Array[A], p: A => Boolean) : Int = { ...
+								</p>
+								
+								<p>When using HOFs, it’s often convenient to be able to call these functions with anonymous functions (also called function literals) rather than an existing named function. An example of this is the syntax (x: Int) => x == 9. This is defined inline using this convenient syntax rather than defining a function as a method with a name. When a function literal is defined in Scala, it is actually an object with a method called apply.</p>
+								
+							</section>
 					</div>
 
 				<!-- Footer -->
